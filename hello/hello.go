@@ -16,13 +16,16 @@ func main() {
 	//This flag disable printing tume, source file and line number
 	log.SetFlags(0)
 
+	// An array of names
+	names := []string{"John", "Deborah", "Gladys"}
+
 	//Request a greeting message
-	message, err := greetings.Hello("John")
+	messages, err := greetings.Hellos(names)
 
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(message)
+	fmt.Println(messages)
 
 	// Get a quote
 	fmt.Println(quote.Go())
