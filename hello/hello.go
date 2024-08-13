@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"golang.org/x/example/hello/reverse"
 	"rsc.io/quote"
 
 	"example.com/greetings"
@@ -29,4 +30,7 @@ func main() {
 
 	// Get a quote
 	fmt.Println(quote.Go())
+
+	//Multi module workspaces
+	fmt.Println(reverse.String(quote.Hello()), reverse.Int(24601))
 }
