@@ -46,7 +46,9 @@ func main() {
 	}
 	fmt.Println("Connected!")
 
-	albums, err := albumsByArtist("John Coltrane")
+	artist := "John Coltrane"
+	fmt.Printf("Querying albums by artist: %s...\n", artist)
+	albums, err := albumsByArtist(artist)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -58,6 +60,18 @@ func main() {
 	for _, album := range albums {
 		fmt.Fprintf(w, "%d\t%s\t%s\t%f\n", album.ID, album.Title, album.Artist, album.Price)
 	}
+	w.Flush()
+
+	albumId := 3
+	fmt.Printf("Querying album by ID: %d...\n", albumId)
+	alb, err := albumByID(2)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Album found:")
+	fmt.Fprintln(w, "ID\tTitle\tArtist\tPrice")
+	fmt.Fprintln(w, "--\t-----\t------\t-----")
+	fmt.Fprintf(w, "%d\t%s\t%s\t%f\n", alb.ID, alb.Title, alb.Artist, alb.Price)
 	w.Flush()
 }
 
@@ -85,4 +99,18 @@ func albumsByArtist(name string) ([]Album, error) {
 	}
 
 	return albums, nil
+}
+
+// albumByID queries for the album with the specified ID.
+func albumByID(id int64) (Album, error) {
+	var alb Album
+
+	row := db.QueryRow("SELECT * FROM album WHERE id = ?", id)
+	if err := row.Scan(&alb.ID, &alb.Title, &alb.Artist, &alb.Price); err != nil {
+		if err == sql.ErrNoRows {
+			return alb, fmt.Errorf("albumsById %d: no such album", id)
+		}
+		return alb, fmt.Errorf("albumsById %d: %v", id, err)
+	}
+	return alb, nil
 }
