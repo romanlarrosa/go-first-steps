@@ -22,7 +22,7 @@ type Album struct {
 
 func main() {
 	// Load env vars
-	godotenv.Load("./data/.env")
+	godotenv.Load()
 
 	// Capture connection properties.
 	cfg := mysql.Config{

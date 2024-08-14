@@ -24,3 +24,9 @@ To set up the database we will be using a free hosting service [railway](https:/
 After setting up the database, we will create a table and insert some data (See [this sql file](./data-access/data/create-tables.sql)).
 
 To properly connect the database update the [.env.example file](./data-access/data/.env.example) renaming it to `.env` and updating its values.
+
+To execute the resultant program, GO should be installed in the machine, and then from the `./data-access` directory execute:
+
+```console
+foo@bar:~$ go run .
+```
